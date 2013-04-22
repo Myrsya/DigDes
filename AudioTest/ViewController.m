@@ -1,6 +1,7 @@
 
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#include "wav_to_flac.h"
 
 @implementation ViewController
 @synthesize playButton, recButton;
@@ -22,6 +23,10 @@
         recStateLabel.text = @"Not Recording";
         
         [recorder stop];
+        
+        //const char *wave_file = [[waveURL path] UTF8String];
+        //const char *flac_file = [[flacURL path] UTF8String];
+        
     }
 }
 
@@ -53,19 +58,25 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     
-    NSArray *pathComponents = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.m4a", nil];
+    wavePath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.wav", nil];
+    flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudioFlac", nil];
     
-    NSURL *outputFileURL = [NSURL fileURLWithPathComponents:pathComponents];
+    waveURL = [NSURL fileURLWithPathComponents:wavePath];
+    flacURL = [NSURL fileURLWithPathComponents:flacPath];
     
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
     
-    NSLog([outputFileURL path]);
+    NSLog([waveURL path]);
     
-    [recordSetting setValue:[NSNumber numberWithInt:kAudioFormatMPEG4AAC] forKey:AVFormatIDKey];
-    [recordSetting setValue:[NSNumber numberWithFloat:44100.0] forKey:AVSampleRateKey];
-    [recordSetting setValue:[NSNumber numberWithInt:1] forKey:AVNumberOfChannelsKey];
+    [recordSetting setValue:[NSNumber numberWithInt: kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+    [recordSetting setValue:[NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
+    [recordSetting setValue:[NSNumber numberWithInt:2] forKey:AVNumberOfChannelsKey];
+    [recordSetting setValue:[NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
+    [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityLow] forKey:AVEncoderAudioQualityKey];
     
-    recorder = [[AVAudioRecorder alloc] initWithURL:outputFileURL settings:recordSetting error:nil];
+    recorder = [[AVAudioRecorder alloc] initWithURL:waveURL settings:recordSetting error:nil];
     recorder.delegate = self;
     recorder.meteringEnabled = YES;
     [recorder prepareToRecord];

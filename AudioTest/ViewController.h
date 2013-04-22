@@ -15,6 +15,10 @@
     
     AVAudioRecorder *recorder;
     AVAudioPlayer *player;
+    
+    NSArray *wavePath, *flacPath;
+    
+    NSURL *waveURL, *flacURL;
 }
 
 @property (nonatomic, retain) IBOutlet UIButton *recButton;
