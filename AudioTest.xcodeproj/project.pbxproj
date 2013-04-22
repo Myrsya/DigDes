@@ -1,0 +1,297 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		407995FF170EFFF60043EBEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407995FE170EFFF60043EBEC /* UIKit.framework */; };
+		40799601170EFFF60043EBEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40799600170EFFF60043EBEC /* Foundation.framework */; };
+		40799603170EFFF60043EBEC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40799602170EFFF60043EBEC /* CoreGraphics.framework */; };
+		40799609170EFFF60043EBEC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 40799607170EFFF60043EBEC /* InfoPlist.strings */; };
+		4079960B170EFFF60043EBEC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4079960A170EFFF60043EBEC /* main.m */; };
+		4079960F170EFFF60043EBEC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4079960E170EFFF60043EBEC /* AppDelegate.m */; };
+		40799612170EFFF60043EBEC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40799611170EFFF60043EBEC /* ViewController.m */; };
+		40799615170EFFF60043EBEC /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40799613170EFFF60043EBEC /* ViewController_iPhone.xib */; };
+		40799618170EFFF60043EBEC /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40799616170EFFF60043EBEC /* ViewController_iPad.xib */; };
+		4079961F170F03540043EBEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079961E170F03540043EBEC /* AVFoundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		407995FA170EFFF60043EBEC /* AudioTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		407995FE170EFFF60043EBEC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		40799600170EFFF60043EBEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		40799602170EFFF60043EBEC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		40799606170EFFF60043EBEC /* AudioTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioTest-Info.plist"; sourceTree = "<group>"; };
+		40799608170EFFF60043EBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4079960A170EFFF60043EBEC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4079960C170EFFF60043EBEC /* AudioTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioTest-Prefix.pch"; sourceTree = "<group>"; };
+		4079960D170EFFF60043EBEC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4079960E170EFFF60043EBEC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		40799610170EFFF60043EBEC /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		40799611170EFFF60043EBEC /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		40799614170EFFF60043EBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
+		40799617170EFFF60043EBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		4079961E170F03540043EBEC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		407995F7170EFFF60043EBEC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4079961F170F03540043EBEC /* AVFoundation.framework in Frameworks */,
+				407995FF170EFFF60043EBEC /* UIKit.framework in Frameworks */,
+				40799601170EFFF60043EBEC /* Foundation.framework in Frameworks */,
+				40799603170EFFF60043EBEC /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		407995EF170EFFF50043EBEC = {
+			isa = PBXGroup;
+			children = (
+				40799604170EFFF60043EBEC /* AudioTest */,
+				407995FD170EFFF60043EBEC /* Frameworks */,
+				407995FB170EFFF60043EBEC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		407995FB170EFFF60043EBEC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				407995FA170EFFF60043EBEC /* AudioTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		407995FD170EFFF60043EBEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4079961E170F03540043EBEC /* AVFoundation.framework */,
+				407995FE170EFFF60043EBEC /* UIKit.framework */,
+				40799600170EFFF60043EBEC /* Foundation.framework */,
+				40799602170EFFF60043EBEC /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		40799604170EFFF60043EBEC /* AudioTest */ = {
+			isa = PBXGroup;
+			children = (
+				4079960D170EFFF60043EBEC /* AppDelegate.h */,
+				4079960E170EFFF60043EBEC /* AppDelegate.m */,
+				40799610170EFFF60043EBEC /* ViewController.h */,
+				40799611170EFFF60043EBEC /* ViewController.m */,
+				40799613170EFFF60043EBEC /* ViewController_iPhone.xib */,
+				40799616170EFFF60043EBEC /* ViewController_iPad.xib */,
+				40799605170EFFF60043EBEC /* Supporting Files */,
+			);
+			path = AudioTest;
+			sourceTree = "<group>";
+		};
+		40799605170EFFF60043EBEC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				40799606170EFFF60043EBEC /* AudioTest-Info.plist */,
+				40799607170EFFF60043EBEC /* InfoPlist.strings */,
+				4079960A170EFFF60043EBEC /* main.m */,
+				4079960C170EFFF60043EBEC /* AudioTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		407995F9170EFFF60043EBEC /* AudioTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4079961B170EFFF60043EBEC /* Build configuration list for PBXNativeTarget "AudioTest" */;
+			buildPhases = (
+				407995F6170EFFF60043EBEC /* Sources */,
+				407995F7170EFFF60043EBEC /* Frameworks */,
+				407995F8170EFFF60043EBEC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioTest;
+			productName = AudioTest;
+			productReference = 407995FA170EFFF60043EBEC /* AudioTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		407995F1170EFFF50043EBEC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 407995F4170EFFF50043EBEC /* Build configuration list for PBXProject "AudioTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 407995EF170EFFF50043EBEC;
+			productRefGroup = 407995FB170EFFF60043EBEC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				407995F9170EFFF60043EBEC /* AudioTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		407995F8170EFFF60043EBEC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				40799609170EFFF60043EBEC /* InfoPlist.strings in Resources */,
+				40799615170EFFF60043EBEC /* ViewController_iPhone.xib in Resources */,
+				40799618170EFFF60043EBEC /* ViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		407995F6170EFFF60043EBEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4079960B170EFFF60043EBEC /* main.m in Sources */,
+				4079960F170EFFF60043EBEC /* AppDelegate.m in Sources */,
+				40799612170EFFF60043EBEC /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		40799607170EFFF60043EBEC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40799608170EFFF60043EBEC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		40799613170EFFF60043EBEC /* ViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40799614170EFFF60043EBEC /* en */,
+			);
+			name = ViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		40799616170EFFF60043EBEC /* ViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				40799617170EFFF60043EBEC /* en */,
+			);
+			name = ViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		40799619170EFFF60043EBEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4079961A170EFFF60043EBEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4079961C170EFFF60043EBEC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AudioTest/AudioTest-Prefix.pch";
+				INFOPLIST_FILE = "AudioTest/AudioTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4079961D170EFFF60043EBEC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AudioTest/AudioTest-Prefix.pch";
+				INFOPLIST_FILE = "AudioTest/AudioTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		407995F4170EFFF50043EBEC /* Build configuration list for PBXProject "AudioTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				40799619170EFFF60043EBEC /* Debug */,
+				4079961A170EFFF60043EBEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4079961B170EFFF60043EBEC /* Build configuration list for PBXNativeTarget "AudioTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4079961C170EFFF60043EBEC /* Debug */,
+				4079961D170EFFF60043EBEC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 407995F1170EFFF50043EBEC /* Project object */;
+}
