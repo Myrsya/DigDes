@@ -24,8 +24,99 @@
         
         [recorder stop];
         
-        //const char *wave_file = [[waveURL path] UTF8String];
-        //const char *flac_file = [[flacURL path] UTF8String];
+        long totalAudioLen = 0;
+        long totalDataLen = 0;
+        long longSampleRate = 16000.0;
+        int channels = 2;
+        long byteRate = 16*16000.0*channels/2;
+        
+        //take data from caf file
+        
+        NSMutableData * soundData = [NSMutableData dataWithContentsOfFile:[cafURL path]];
+        const char * soundBytes = (const char*)[soundData bytes];
+        int dataStartIndex = 0;
+        //search for data chunk
+        for (int i = 0; i<[soundData length]-4; i++) 
+        {
+            if (soundBytes[i] == 'd' && soundBytes[i+1] == 'a' && soundBytes[i+2] == 't' && soundBytes[i+3] == 'a')
+            {
+                dataStartIndex = i;
+                NSLog(@"%d", dataStartIndex);
+            }
+        }
+        NSLog(@"source:%d", [soundData length]);
+        //take raw audio
+        NSData *rawSound = [NSMutableData dataWithData:[soundData subdataWithRange:NSMakeRange(dataStartIndex+11, [soundData length] - dataStartIndex - 11)]];
+        
+        totalAudioLen=[rawSound length];
+        
+        totalDataLen=totalAudioLen + 44;
+        
+        NSLog(@"dest :%ld", totalDataLen);
+        
+        Byte *header = (Byte*)malloc(44);
+        header[0]='R';
+        header[1]='I';
+        header[2]='F';
+        header[3]='F';
+        header[4]=(Byte) (totalDataLen & 0xff);
+        header[5]=(Byte) ((totalDataLen >> 8) & 0xff);
+        header[6]=(Byte) ((totalDataLen >> 16) & 0xff);
+        header[7]=(Byte) ((totalDataLen >> 24) & 0xff);
+        header[8]='W';
+        header[9]='A';
+        header[10]='V';
+        header[11]='E';
+        header[12]='f';
+        header[13]='m';
+        header[14]='t';
+        header[15]=' ';
+        header[16] = 16;  // 4 bytes: size of 'fmt ' chunk
+        header[17] = 0;
+        header[18] = 0;
+        header[19] = 0;
+        header[20] = 1;  // format = 1
+        header[21] = 0;
+        header[22] = (Byte) channels;
+        header[23] = 0;
+        header[24] = (Byte) (longSampleRate & 0xff);
+        header[25] = (Byte) ((longSampleRate >> 8) & 0xff);
+        header[26] = (Byte) ((longSampleRate >> 16) & 0xff);
+        header[27] = (Byte) ((longSampleRate >> 24) & 0xff);
+        header[28] = (Byte) (byteRate & 0xff);
+        header[29] = (Byte) ((byteRate >> 8) & 0xff);
+        header[30] = (Byte) ((byteRate >> 16) & 0xff);
+        header[31] = (Byte) ((byteRate >> 24) & 0xff);
+        header[32] = (Byte) (2 * 16 / 8);  // block align
+        header[33] = 0;
+        header[34] = 16;  // bits per sample
+        header[35] = 0;
+        header[36] = 'd';
+        header[37] = 'a';
+        header[38] = 't';
+        header[39] = 'a';
+        header[40] = (Byte) (totalAudioLen & 0xff);
+        header[41] = (Byte) ((totalAudioLen >> 8) & 0xff);
+        header[42] = (Byte) ((totalAudioLen >> 16) & 0xff);
+        header[43] = (Byte) ((totalAudioLen >> 24) & 0xff);
+        
+        NSData *headerData = [NSData dataWithBytes:header length:44];
+        
+        NSMutableData * wavFileData = [NSMutableData alloc];
+        [wavFileData appendData:headerData];
+        [wavFileData appendData:rawSound];
+        
+        
+        NSURL *newFilePath = [NSURL fileURLWithPathComponents:[NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"New.wav", nil]];
+        [[NSFileManager defaultManager] createFileAtPath:[newFilePath path] contents:wavFileData attributes:nil]; 
+        
+        //convert to flac
+        flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.flac", nil];
+        flacURL = [NSURL fileURLWithPathComponents:flacPath];
+        const char *wave_file = [[newFilePath path] UTF8String];
+        const char *flac_file = [[flacURL path] UTF8String];
+        int ConvertResult = convertWavToFlac(wave_file, flac_file);
+        NSLog(@"converresult: %d", ConvertResult);
         
     }
 }
@@ -58,15 +149,14 @@
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
     
-    wavePath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.wav", nil];
-    flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudioFlac", nil];
+    cafPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio", nil];
+        
+    cafURL = [NSURL fileURLWithPathComponents:cafPath];
     
-    waveURL = [NSURL fileURLWithPathComponents:wavePath];
-    flacURL = [NSURL fileURLWithPathComponents:flacPath];
     
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
     
-    NSLog([waveURL path]);
+    NSLog([cafURL path]);
     
     [recordSetting setValue:[NSNumber numberWithInt: kAudioFormatLinearPCM] forKey:AVFormatIDKey];
     [recordSetting setValue:[NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
@@ -76,10 +166,17 @@
     [recordSetting setValue:[NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
     [recordSetting setValue:[NSNumber numberWithInt:AVAudioQualityLow] forKey:AVEncoderAudioQualityKey];
     
-    recorder = [[AVAudioRecorder alloc] initWithURL:waveURL settings:recordSetting error:nil];
+    recorder = [[AVAudioRecorder alloc] initWithURL:cafURL settings:recordSetting error:nil];
     recorder.delegate = self;
     recorder.meteringEnabled = YES;
     [recorder prepareToRecord];
+
+}
+
+-(void)convertToWav{
+        
+    //flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudioFlac", nil];
+    //flacURL = [NSURL fileURLWithPathComponents:flacPath];
 
 }
 

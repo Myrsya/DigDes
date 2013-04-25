@@ -16,6 +16,6 @@ extern "C"
       so a 30 second file with split_interval_seconds == 10 will have 3 output files. Pass 0 to encode 1 output file.
  ** out_flac_files: a list of char* to the output files created, should have enough space up to a max of 1024 output files
  **/
-int convertWavToFlac(const char *wave_file_in, const char *flac_file_out, int split_interval_seconds, char** out_flac_files);
+int convertWavToFlac(const char *wave_file_in, const char *flac_file_out);
 
 #endif
