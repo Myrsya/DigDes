@@ -1,26 +1,25 @@
 
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import <QuartzCore/QuartzCore.h>
 #include "wav_to_flac.h"
 
 @implementation ViewController
-@synthesize playButton, recButton;
+@synthesize recButton, textView, spinner;
 
 -(IBAction)recording{
     if(isNotRecording){
         isNotRecording = NO;
         [recButton setTitle:@"STOP" forState:UIControlStateNormal];
-        playButton.enabled = NO;
-        recStateLabel.text = @"Recording";
         
         [recorder record];
         
     }
     else{
+        spinner.hidden = NO;
+        [spinner startAnimating];
         isNotRecording = YES;
         [recButton setTitle:@"REC" forState:UIControlStateNormal];
-        playButton.enabled = YES;
-        recStateLabel.text = @"Not Recording";
         
         [recorder stop];
         
@@ -28,7 +27,7 @@
         long totalDataLen = 0;
         long longSampleRate = 16000.0;
         int channels = 2;
-        long byteRate = 16*16000.0*channels/2;
+        long byteRate = 16*16000.0*channels/8;
         
         //take data from caf file
         
@@ -39,20 +38,14 @@
         for (int i = 0; i<[soundData length]-4; i++) 
         {
             if (soundBytes[i] == 'd' && soundBytes[i+1] == 'a' && soundBytes[i+2] == 't' && soundBytes[i+3] == 'a')
-            {
                 dataStartIndex = i;
-                NSLog(@"%d", dataStartIndex);
-            }
         }
-        NSLog(@"source:%d", [soundData length]);
         //take raw audio
-        NSData *rawSound = [NSMutableData dataWithData:[soundData subdataWithRange:NSMakeRange(dataStartIndex+11, [soundData length] - dataStartIndex - 11)]];
+        NSData *rawSound = [NSMutableData dataWithData:[soundData subdataWithRange:NSMakeRange(dataStartIndex+10, [soundData length] - dataStartIndex - 10)]];
         
         totalAudioLen=[rawSound length];
         
         totalDataLen=totalAudioLen + 44;
-        
-        NSLog(@"dest :%ld", totalDataLen);
         
         Byte *header = (Byte*)malloc(44);
         header[0]='R';
@@ -106,45 +99,63 @@
         [wavFileData appendData:headerData];
         [wavFileData appendData:rawSound];
         
-        
-        NSURL *newFilePath = [NSURL fileURLWithPathComponents:[NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"New.wav", nil]];
-        [[NSFileManager defaultManager] createFileAtPath:[newFilePath path] contents:wavFileData attributes:nil]; 
+        wavPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.wav", nil];
+        wavURL = [NSURL fileURLWithPathComponents:wavPath];
+        [[NSFileManager defaultManager] createFileAtPath:[wavURL path] contents:wavFileData attributes:nil]; 
         
         //convert to flac
         flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.flac", nil];
         flacURL = [NSURL fileURLWithPathComponents:flacPath];
-        const char *wave_file = [[newFilePath path] UTF8String];
+        const char *wave_file = [[wavURL path] UTF8String];
         const char *flac_file = [[flacURL path] UTF8String];
-        int ConvertResult = convertWavToFlac(wave_file, flac_file);
-        NSLog(@"converresult: %d", ConvertResult);
+        convertWavToFlac(wave_file, flac_file);
         
+        //send flac to Google
+        
+        NSData *myData = [NSData dataWithContentsOfFile:[flacURL path]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                        initWithURL:[NSURL
+                                                     URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU"]];
+        
+        [request setHTTPMethod:@"POST"];
+        
+        //set headers
+        
+        [request addValue:@"Content-Type" forHTTPHeaderField:@"audio/x-flac; rate=16000"];
+        
+        [request addValue:@"audio/x-flac; rate=16000" forHTTPHeaderField:@"Content-Type"];
+        
+        [request setHTTPBody:myData];
+        
+        [request setValue:[NSString stringWithFormat:@"%d",[myData length]] forHTTPHeaderField:@"Content-length"];
+        
+        NSHTTPURLResponse* urlResponse = nil;
+        NSError *error = [[NSError alloc] init];
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
+        NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        NSDictionary *parsedJSON =[(NSArray*)[json objectForKey:@"hypotheses"] objectAtIndex:0];
+        NSString *textToShow = [parsedJSON objectForKey:@"utterance"];
+        
+        NSLog(@"The answer is: %@",result);
+        NSLog(@"JSON answer is: %@", textToShow);
+        
+        [spinner stopAnimating];
+        
+        textView.text = textToShow;
     }
 }
 
--(IBAction)playback{
-    recButton.enabled=NO;
-    playStateLabel.text=@"Playing";
-    
-    player = [[AVAudioPlayer alloc] initWithContentsOfURL:recorder.url error:nil];
-    [player setDelegate:self];
-    [player prepareToPlay];
-    [player play];
-    
-}
-
--(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
-    recButton.enabled=YES;
-    playStateLabel.text=@"Not Playing";
-}
-
 -(void)viewDidLoad{
-     [super viewDidLoad];
+    [super viewDidLoad];
+    self.title = @"Speech to text";
+    [self.view addSubview:spinner];
+    textView.delegate = self;
+    textView.layer.borderWidth = 2.0f;
+    textView.layer.borderColor = [[UIColor grayColor] CGColor];
+    textView.layer.cornerRadius = 8;
     
     isNotRecording = YES;
-    [playButton setEnabled:NO];
-    [recStateLabel setText:@"Not recording"];
-    [playStateLabel setText:@"Not playing"];
     
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayAndRecord error:nil];
@@ -155,8 +166,6 @@
     
     
     NSMutableDictionary *recordSetting = [[NSMutableDictionary alloc] init];
-    
-    NSLog([cafURL path]);
     
     [recordSetting setValue:[NSNumber numberWithInt: kAudioFormatLinearPCM] forKey:AVFormatIDKey];
     [recordSetting setValue:[NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
@@ -173,25 +182,16 @@
 
 }
 
--(void)convertToWav{
-        
-    //flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudioFlac", nil];
-    //flacURL = [NSURL fileURLWithPathComponents:flacPath];
-
-}
-
 -(void)viewDidUnload{
-    player=nil;
     recorder=nil;
-    playButton=nil;
     recButton=nil;
+    textView=nil;
 }
 
 -(void)dealloc{
     [recorder release];
-    [player release];
-    [playButton release];
     [recButton release];
+    [textView release];
     [super dealloc];
 }
 

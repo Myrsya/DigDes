@@ -17,6 +17,7 @@
 		40799615170EFFF60043EBEC /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40799613170EFFF60043EBEC /* ViewController_iPhone.xib */; };
 		40799618170EFFF60043EBEC /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40799616170EFFF60043EBEC /* ViewController_iPad.xib */; };
 		4079961F170F03540043EBEC /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4079961E170F03540043EBEC /* AVFoundation.framework */; };
+		407A11631742D8CA00F1E4CD /* bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 407A11621742D8CA00F1E4CD /* bg.gif */; };
 		408187C417258D7500700F19 /* FLACiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408187C317258D7500700F19 /* FLACiOS.framework */; };
 		408187C61725954200700F19 /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = 408187C51725954200700F19 /* wav_to_flac.c */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		40799614170EFFF60043EBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
 		40799617170EFFF60043EBEC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		4079961E170F03540043EBEC /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		407A11621742D8CA00F1E4CD /* bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bg.gif; sourceTree = "<group>"; };
 		408187C317258D7500700F19 /* FLACiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLACiOS.framework; path = "../../../Library/Developer/Xcode/DerivedData/FLACiOS-eyvmzpogoxskltdlmfhlrbjrcgtt/Build/Products/Debug-iphonesimulator/FLACiOS.framework"; sourceTree = "<group>"; };
 		408187C51725954200700F19 /* wav_to_flac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
 		40A4FA0A1725959400350979 /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 		407995EF170EFFF50043EBEC = {
 			isa = PBXGroup;
 			children = (
+				407A11621742D8CA00F1E4CD /* bg.gif */,
 				40799604170EFFF60043EBEC /* AudioTest */,
 				407995FD170EFFF60043EBEC /* Frameworks */,
 				407995FB170EFFF60043EBEC /* Products */,
@@ -167,6 +170,7 @@
 				40799609170EFFF60043EBEC /* InfoPlist.strings in Resources */,
 				40799615170EFFF60043EBEC /* ViewController_iPhone.xib in Resources */,
 				40799618170EFFF60043EBEC /* ViewController_iPad.xib in Resources */,
+				407A11631742D8CA00F1E4CD /* bg.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

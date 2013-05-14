@@ -3,28 +3,25 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreAudio/CoreAudioTypes.h>
 
-@interface ViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate>
+@interface ViewController : UIViewController <AVAudioRecorderDelegate, AVAudioPlayerDelegate, UITextViewDelegate>
 {
-    IBOutlet UIButton *playButton;
     IBOutlet UIButton *recButton;
-    
-    IBOutlet UILabel *recStateLabel;
-    IBOutlet UILabel *playStateLabel;
+    IBOutlet UITextView *textView;
+    IBOutlet UIActivityIndicatorView *spinner;
     
     BOOL isNotRecording;
     
     AVAudioRecorder *recorder;
-    AVAudioPlayer *player;
     
-    NSArray *cafPath, *flacPath;
+    NSArray *cafPath, *wavPath, *flacPath;
     
-    NSURL *cafURL, *flacURL;
+    NSURL *cafURL, *wavURL, *flacURL;
 }
 
 @property (nonatomic, retain) IBOutlet UIButton *recButton;
-@property (nonatomic, retain) IBOutlet UIButton *playButton;
+@property (nonatomic, retain) IBOutlet UITextView *textView;
+@property (nonatomic, retain) IBOutlet UIActivityIndicatorView *spinner;
 
 -(IBAction)recording;
--(IBAction)playback;
 
 @end
