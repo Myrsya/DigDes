@@ -1,0 +1,279 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		407A114217429BEC00F1E4CD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407A114117429BEC00F1E4CD /* UIKit.framework */; };
+		407A114417429BEC00F1E4CD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407A114317429BEC00F1E4CD /* Foundation.framework */; };
+		407A114617429BEC00F1E4CD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407A114517429BEC00F1E4CD /* CoreGraphics.framework */; };
+		407A114C17429BEC00F1E4CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 407A114A17429BEC00F1E4CD /* InfoPlist.strings */; };
+		407A114E17429BEC00F1E4CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A114D17429BEC00F1E4CD /* main.m */; };
+		407A115217429BEC00F1E4CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A115117429BEC00F1E4CD /* AppDelegate.m */; };
+		407A115517429BEC00F1E4CD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 407A115417429BEC00F1E4CD /* ViewController.m */; };
+		407A115817429BEC00F1E4CD /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 407A115617429BEC00F1E4CD /* ViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		407A113D17429BEC00F1E4CD /* GoogleSpeech.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoogleSpeech.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		407A114117429BEC00F1E4CD /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		407A114317429BEC00F1E4CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		407A114517429BEC00F1E4CD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		407A114917429BEC00F1E4CD /* GoogleSpeech-Info.plist */ = {isa = PBXFileReference; path = "GoogleSpeech-Info.plist"; sourceTree = "<group>"; };
+		407A114B17429BEC00F1E4CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		407A114D17429BEC00F1E4CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		407A114F17429BEC00F1E4CD /* GoogleSpeech-Prefix.pch */ = {isa = PBXFileReference; path = "GoogleSpeech-Prefix.pch"; sourceTree = "<group>"; };
+		407A115017429BEC00F1E4CD /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		407A115117429BEC00F1E4CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		407A115317429BEC00F1E4CD /* ViewController.h */ = {isa = PBXFileReference; path = ViewController.h; sourceTree = "<group>"; };
+		407A115417429BEC00F1E4CD /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		407A115717429BEC00F1E4CD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		407A113A17429BEC00F1E4CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				407A114217429BEC00F1E4CD /* UIKit.framework in Frameworks */,
+				407A114417429BEC00F1E4CD /* Foundation.framework in Frameworks */,
+				407A114617429BEC00F1E4CD /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		407A113217429BEC00F1E4CD = {
+			isa = PBXGroup;
+			children = (
+				407A114717429BEC00F1E4CD /* GoogleSpeech */,
+				407A114017429BEC00F1E4CD /* Frameworks */,
+				407A113E17429BEC00F1E4CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		407A113E17429BEC00F1E4CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				407A113D17429BEC00F1E4CD /* GoogleSpeech.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		407A114017429BEC00F1E4CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				407A114117429BEC00F1E4CD /* UIKit.framework */,
+				407A114317429BEC00F1E4CD /* Foundation.framework */,
+				407A114517429BEC00F1E4CD /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		407A114717429BEC00F1E4CD /* GoogleSpeech */ = {
+			isa = PBXGroup;
+			children = (
+				407A115017429BEC00F1E4CD /* AppDelegate.h */,
+				407A115117429BEC00F1E4CD /* AppDelegate.m */,
+				407A115317429BEC00F1E4CD /* ViewController.h */,
+				407A115417429BEC00F1E4CD /* ViewController.m */,
+				407A115617429BEC00F1E4CD /* ViewController.xib */,
+				407A114817429BEC00F1E4CD /* Supporting Files */,
+			);
+			path = GoogleSpeech;
+			sourceTree = "<group>";
+		};
+		407A114817429BEC00F1E4CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				407A114917429BEC00F1E4CD /* GoogleSpeech-Info.plist */,
+				407A114A17429BEC00F1E4CD /* InfoPlist.strings */,
+				407A114D17429BEC00F1E4CD /* main.m */,
+				407A114F17429BEC00F1E4CD /* GoogleSpeech-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		407A113C17429BEC00F1E4CD /* GoogleSpeech */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 407A115B17429BEC00F1E4CD /* Build configuration list for PBXNativeTarget "GoogleSpeech" */;
+			buildPhases = (
+				407A113917429BEC00F1E4CD /* Sources */,
+				407A113A17429BEC00F1E4CD /* Frameworks */,
+				407A113B17429BEC00F1E4CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GoogleSpeech;
+			productName = GoogleSpeech;
+			productReference = 407A113D17429BEC00F1E4CD /* GoogleSpeech.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		407A113417429BEC00F1E4CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 407A113717429BEC00F1E4CD /* Build configuration list for PBXProject "GoogleSpeech" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 407A113217429BEC00F1E4CD;
+			productRefGroup = 407A113E17429BEC00F1E4CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				407A113C17429BEC00F1E4CD /* GoogleSpeech */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		407A113B17429BEC00F1E4CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				407A114C17429BEC00F1E4CD /* InfoPlist.strings in Resources */,
+				407A115817429BEC00F1E4CD /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		407A113917429BEC00F1E4CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				407A114E17429BEC00F1E4CD /* main.m in Sources */,
+				407A115217429BEC00F1E4CD /* AppDelegate.m in Sources */,
+				407A115517429BEC00F1E4CD /* ViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		407A114A17429BEC00F1E4CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				407A114B17429BEC00F1E4CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		407A115617429BEC00F1E4CD /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				407A115717429BEC00F1E4CD /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		407A115917429BEC00F1E4CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		407A115A17429BEC00F1E4CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		407A115C17429BEC00F1E4CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoogleSpeech/GoogleSpeech-Prefix.pch";
+				INFOPLIST_FILE = "GoogleSpeech/GoogleSpeech-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		407A115D17429BEC00F1E4CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GoogleSpeech/GoogleSpeech-Prefix.pch";
+				INFOPLIST_FILE = "GoogleSpeech/GoogleSpeech-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		407A113717429BEC00F1E4CD /* Build configuration list for PBXProject "GoogleSpeech" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				407A115917429BEC00F1E4CD /* Debug */,
+				407A115A17429BEC00F1E4CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		407A115B17429BEC00F1E4CD /* Build configuration list for PBXNativeTarget "GoogleSpeech" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				407A115C17429BEC00F1E4CD /* Debug */,
+				407A115D17429BEC00F1E4CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 407A113417429BEC00F1E4CD /* Project object */;
+}
