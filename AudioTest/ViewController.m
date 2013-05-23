@@ -5,12 +5,16 @@
 #include "wav_to_flac.h"
 
 @implementation ViewController
-@synthesize recButton, textView, spinner, hostActive;
+@synthesize recButton, textView, spinner;
 
 -(IBAction)recording{
     if(isNotRecording){
         isNotRecording = NO;
         [recButton setTitle:@"STOP" forState:UIControlStateNormal];
+        
+        [textView setEditable:NO];
+        textView.textColor = [UIColor grayColor];
+        textView.text=@"Идет запись голоса...";
         
         [recorder record];
         
@@ -27,6 +31,10 @@
         long longSampleRate = 16000.0;
         int channels = 2;
         long byteRate = 16*16000.0*channels/8;
+        
+        [textView setEditable:YES];
+        textView.textColor = [UIColor grayColor];
+        textView.text=@"Обработка...";
         
         //take data from caf file
         
@@ -107,28 +115,26 @@
         convertWavToFlac(wave_file, flac_file);
         //send flac to Google
         
+        NSData *myData = [NSData dataWithContentsOfFile:[flacURL path]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                        initWithURL:[NSURL
+                                                     URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU"] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
+        [request setHTTPMethod:@"POST"];
+        //set headers
+        
+        [request addValue:@"Content-Type" forHTTPHeaderField:@"audio/x-flac; rate=16000"];
+        
+        [request addValue:@"audio/x-flac; rate=16000" forHTTPHeaderField:@"Content-Type"];
+        
+        [request setHTTPBody:myData];
+        
+        [request setValue:[NSString stringWithFormat:@"%d",[myData length]] forHTTPHeaderField:@"Content-length"];
+        NSHTTPURLResponse* urlResponse = nil;
+        NSError *error = [[NSError alloc] init];
+        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse  error:&error];
         //catch if we have internet connection
-        if (self.hostActive == YES)
+        if (responseData != nil)
         {
-            NSData *myData = [NSData dataWithContentsOfFile:[flacURL path]];
-            NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                            initWithURL:[NSURL
-                                                         URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU"]];
-            [request setHTTPMethod:@"POST"];
-            //set headers
-            
-            [request setTimeoutInterval:1.0];
-            [request addValue:@"Content-Type" forHTTPHeaderField:@"audio/x-flac; rate=16000"];
-            
-            [request addValue:@"audio/x-flac; rate=16000" forHTTPHeaderField:@"Content-Type"];
-            
-            [request setHTTPBody:myData];
-            
-            [request setValue:[NSString stringWithFormat:@"%d",[myData length]] forHTTPHeaderField:@"Content-length"];
-            NSHTTPURLResponse* urlResponse = nil;
-            NSError *error = [[NSError alloc] init];
-            NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse  error:&error];
-            
             NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
             NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
             NSLog(@"The answer is: %@",result);
@@ -144,7 +150,6 @@
                 NSString *textToShow = [(NSDictionary*)[parsedJSON objectAtIndex:0] objectForKey:@"utterance"];
                 
                 NSLog(@"JSON answer is: %@", textToShow);
-                
                 textView.textColor = [UIColor blackColor];
                 textView.text = textToShow;
             }   
@@ -168,39 +173,6 @@
 {
     [textView setFrame:CGRectMake(40, 148, 240, 275)];
 }
-
-- (void) checkNetworkStatus:(NSNotification *)notice {
-    NetworkStatus hostStatus = [hostReachable currentReachabilityStatus];
-    switch (hostStatus)
-    
-    {
-        case NotReachable:
-        {
-            NSLog(@"A gateway to the host server is down.");
-            self.hostActive = NO;
-            
-            break;
-            
-        }
-        case ReachableViaWiFi:
-        {
-            NSLog(@"A gateway to the host server is working via WIFI.");
-            self.hostActive = YES;
-            
-            break;
-            
-        }
-        case ReachableViaWWAN:
-        {
-            NSLog(@"A gateway to the host server is working via WWAN.");
-            self.hostActive = YES;
-            
-            break;
-            
-        }
-    }
-}
-
 
 -(IBAction)touchBackground:(id)sender;
 {
@@ -245,12 +217,6 @@
     //keyboard
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
-    //internet
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
-    
-    hostReachable = [[Reachability reachabilityWithHostname:@"www.google.com"] retain];
-    [hostReachable startNotifier];
 
 }
 
@@ -264,7 +230,6 @@
     [recorder release];
     [recButton release];
     [textView release];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 

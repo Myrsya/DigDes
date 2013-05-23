@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4037D626174E929800B21989 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4037D625174E929800B21989 /* SystemConfiguration.framework */; };
 		407995FF170EFFF60043EBEC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 407995FE170EFFF60043EBEC /* UIKit.framework */; };
 		40799601170EFFF60043EBEC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40799600170EFFF60043EBEC /* Foundation.framework */; };
 		40799603170EFFF60043EBEC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 40799602170EFFF60043EBEC /* CoreGraphics.framework */; };
@@ -21,11 +20,9 @@
 		407A11631742D8CA00F1E4CD /* bg.gif in Resources */ = {isa = PBXBuildFile; fileRef = 407A11621742D8CA00F1E4CD /* bg.gif */; };
 		408187C417258D7500700F19 /* FLACiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 408187C317258D7500700F19 /* FLACiOS.framework */; };
 		408187C61725954200700F19 /* wav_to_flac.c in Sources */ = {isa = PBXBuildFile; fileRef = 408187C51725954200700F19 /* wav_to_flac.c */; };
-		40821262174E8E34002DDB86 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 40821261174E8E34002DDB86 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4037D625174E929800B21989 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		407995FA170EFFF60043EBEC /* AudioTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		407995FE170EFFF60043EBEC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		40799600170EFFF60043EBEC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -44,8 +41,6 @@
 		407A11621742D8CA00F1E4CD /* bg.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bg.gif; sourceTree = "<group>"; };
 		408187C317258D7500700F19 /* FLACiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FLACiOS.framework; path = "../../../Library/Developer/Xcode/DerivedData/FLACiOS-eyvmzpogoxskltdlmfhlrbjrcgtt/Build/Products/Debug-iphonesimulator/FLACiOS.framework"; sourceTree = "<group>"; };
 		408187C51725954200700F19 /* wav_to_flac.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = wav_to_flac.c; sourceTree = "<group>"; };
-		4082125F174E8E19002DDB86 /* Reachability.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		40821261174E8E34002DDB86 /* Reachability.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		40A4FA0A1725959400350979 /* wav_to_flac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wav_to_flac.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,7 +49,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4037D626174E929800B21989 /* SystemConfiguration.framework in Frameworks */,
 				408187C417258D7500700F19 /* FLACiOS.framework in Frameworks */,
 				4079961F170F03540043EBEC /* AVFoundation.framework in Frameworks */,
 				407995FF170EFFF60043EBEC /* UIKit.framework in Frameworks */,
@@ -69,7 +63,6 @@
 		407995EF170EFFF50043EBEC = {
 			isa = PBXGroup;
 			children = (
-				4037D625174E929800B21989 /* SystemConfiguration.framework */,
 				407A11621742D8CA00F1E4CD /* bg.gif */,
 				40799604170EFFF60043EBEC /* AudioTest */,
 				407995FD170EFFF60043EBEC /* Frameworks */,
@@ -100,8 +93,6 @@
 		40799604170EFFF60043EBEC /* AudioTest */ = {
 			isa = PBXGroup;
 			children = (
-				40821261174E8E34002DDB86 /* Reachability.m */,
-				4082125F174E8E19002DDB86 /* Reachability.h */,
 				40A4FA0A1725959400350979 /* wav_to_flac.h */,
 				408187C51725954200700F19 /* wav_to_flac.c */,
 				4079960D170EFFF60043EBEC /* AppDelegate.h */,
@@ -190,7 +181,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40821262174E8E34002DDB86 /* Reachability.m in Sources */,
 				408187C61725954200700F19 /* wav_to_flac.c in Sources */,
 				4079960B170EFFF60043EBEC /* main.m in Sources */,
 				4079960F170EFFF60043EBEC /* AppDelegate.m in Sources */,
