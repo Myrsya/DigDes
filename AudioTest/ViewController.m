@@ -5,7 +5,7 @@
 #include "wav_to_flac.h"
 
 @implementation ViewController
-@synthesize recButton, textView, spinner;
+@synthesize recButton, textView, spinner, hostActive;
 
 -(IBAction)recording{
     if(isNotRecording){
@@ -22,7 +22,6 @@
         [recButton setTitle:@"REC" forState:UIControlStateNormal];
         
         [recorder stop];
-        
         long totalAudioLen = 0;
         long totalDataLen = 0;
         long longSampleRate = 16000.0;
@@ -94,56 +93,118 @@
         header[43] = (Byte) ((totalAudioLen >> 24) & 0xff);
         
         NSData *headerData = [NSData dataWithBytes:header length:44];
-        
         NSMutableData * wavFileData = [NSMutableData alloc];
         [wavFileData appendData:headerData];
         [wavFileData appendData:rawSound];
-        
         wavPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.wav", nil];
         wavURL = [NSURL fileURLWithPathComponents:wavPath];
-        [[NSFileManager defaultManager] createFileAtPath:[wavURL path] contents:wavFileData attributes:nil]; 
-        
+        [[NSFileManager defaultManager] createFileAtPath:[wavURL path] contents:wavFileData attributes:nil];
         //convert to flac
         flacPath = [NSArray arrayWithObjects:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject], @"MyAudio.flac", nil];
         flacURL = [NSURL fileURLWithPathComponents:flacPath];
         const char *wave_file = [[wavURL path] UTF8String];
         const char *flac_file = [[flacURL path] UTF8String];
         convertWavToFlac(wave_file, flac_file);
-        
         //send flac to Google
         
-        NSData *myData = [NSData dataWithContentsOfFile:[flacURL path]];
-        NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
-                                        initWithURL:[NSURL
-                                                     URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU"]];
-        
-        [request setHTTPMethod:@"POST"];
-        
-        //set headers
-        
-        [request addValue:@"Content-Type" forHTTPHeaderField:@"audio/x-flac; rate=16000"];
-        
-        [request addValue:@"audio/x-flac; rate=16000" forHTTPHeaderField:@"Content-Type"];
-        
-        [request setHTTPBody:myData];
-        
-        [request setValue:[NSString stringWithFormat:@"%d",[myData length]] forHTTPHeaderField:@"Content-length"];
-        
-        NSHTTPURLResponse* urlResponse = nil;
-        NSError *error = [[NSError alloc] init];
-        NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:&error];
-        NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
-        NSDictionary *parsedJSON =[(NSArray*)[json objectForKey:@"hypotheses"] objectAtIndex:0];
-        NSString *textToShow = [parsedJSON objectForKey:@"utterance"];
-        
-        NSLog(@"The answer is: %@",result);
-        NSLog(@"JSON answer is: %@", textToShow);
+        //catch if we have internet connection
+        if (self.hostActive == YES)
+        {
+            NSData *myData = [NSData dataWithContentsOfFile:[flacURL path]];
+            NSMutableURLRequest *request = [[NSMutableURLRequest alloc]
+                                            initWithURL:[NSURL
+                                                         URLWithString:@"https://www.google.com/speech-api/v1/recognize?xjerr=1&client=chromium&lang=ru-RU"]];
+            [request setHTTPMethod:@"POST"];
+            //set headers
+            
+            [request setTimeoutInterval:1.0];
+            [request addValue:@"Content-Type" forHTTPHeaderField:@"audio/x-flac; rate=16000"];
+            
+            [request addValue:@"audio/x-flac; rate=16000" forHTTPHeaderField:@"Content-Type"];
+            
+            [request setHTTPBody:myData];
+            
+            [request setValue:[NSString stringWithFormat:@"%d",[myData length]] forHTTPHeaderField:@"Content-length"];
+            NSHTTPURLResponse* urlResponse = nil;
+            NSError *error = [[NSError alloc] init];
+            NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse  error:&error];
+            
+            NSString *result = [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+            NSLog(@"The answer is: %@",result);
+            NSArray *parsedJSON = (NSArray*)[json objectForKey:@"hypotheses"]; 
+            //catch if we recognized text
+            if ([parsedJSON count] == nil)
+            {
+                textView.textColor = [UIColor colorWithRed:122.0f/255.0f green:24.0f/255.0f blue:16.0f/255.0f alpha:1.0f];
+                textView.text = @"Не удалось распознать. Попробуйте еще раз.";
+            }
+            else
+            {
+                NSString *textToShow = [(NSDictionary*)[parsedJSON objectAtIndex:0] objectForKey:@"utterance"];
+                
+                NSLog(@"JSON answer is: %@", textToShow);
+                
+                textView.textColor = [UIColor blackColor];
+                textView.text = textToShow;
+            }   
+        }
+        else
+        {
+            textView.textColor = [UIColor colorWithRed:122.0f/255.0f green:24.0f/255.0f blue:16.0f/255.0f alpha:1.0f];
+            textView.text = @"Ошибка сети. Попробуйте еще раз.";
+        }
         
         [spinner stopAnimating];
-        
-        textView.text = textToShow;
     }
+}
+
+- (void)keyboardWillShow:(NSNotification *)notif
+{
+    [textView setFrame:CGRectMake(40, 148, 240, 80)];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notif
+{
+    [textView setFrame:CGRectMake(40, 148, 240, 275)];
+}
+
+- (void) checkNetworkStatus:(NSNotification *)notice {
+    NetworkStatus hostStatus = [hostReachable currentReachabilityStatus];
+    switch (hostStatus)
+    
+    {
+        case NotReachable:
+        {
+            NSLog(@"A gateway to the host server is down.");
+            self.hostActive = NO;
+            
+            break;
+            
+        }
+        case ReachableViaWiFi:
+        {
+            NSLog(@"A gateway to the host server is working via WIFI.");
+            self.hostActive = YES;
+            
+            break;
+            
+        }
+        case ReachableViaWWAN:
+        {
+            NSLog(@"A gateway to the host server is working via WWAN.");
+            self.hostActive = YES;
+            
+            break;
+            
+        }
+    }
+}
+
+
+-(IBAction)touchBackground:(id)sender;
+{
+    [textView resignFirstResponder];
 }
 
 -(void)viewDidLoad{
@@ -154,6 +215,7 @@
     textView.layer.borderWidth = 2.0f;
     textView.layer.borderColor = [[UIColor grayColor] CGColor];
     textView.layer.cornerRadius = 8;
+    textView.layer.backgroundColor = [[UIColor whiteColor] CGColor];
     
     isNotRecording = YES;
     
@@ -179,6 +241,16 @@
     recorder.delegate = self;
     recorder.meteringEnabled = YES;
     [recorder prepareToRecord];
+    
+    //keyboard
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
+    //internet
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(checkNetworkStatus:) name:kReachabilityChangedNotification object:nil];
+    
+    hostReachable = [[Reachability reachabilityWithHostname:@"www.google.com"] retain];
+    [hostReachable startNotifier];
 
 }
 
@@ -192,6 +264,7 @@
     [recorder release];
     [recButton release];
     [textView release];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
 }
 
